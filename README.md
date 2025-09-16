@@ -2,7 +2,7 @@
 
 ## Description
 
-Library App is a sample console-based library management system. It allows users to search for patrons, view patron details, manage book loans, and renew memberships. The application uses JSON files for data storage and demonstrates clean separation of concerns using repositories, services, and dependency injection.
+Library App is a sample console-based library management system. It allows users to search for patrons, view patron details, manage book loans, and renew memberships. The application uses JSON files for data storage and demonstrates clean separation of concerns using repositories, services, dependency injection etc.
 
 ## Project Structure
 
