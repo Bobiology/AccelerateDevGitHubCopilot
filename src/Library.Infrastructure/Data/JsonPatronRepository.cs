@@ -16,15 +16,10 @@ public class JsonPatronRepository : IPatronRepository
     {
         await _jsonData.EnsureDataLoaded();
 
-        List<Patron> searchResults = new List<Patron>();
-        foreach (Patron patron in _jsonData.Patrons)
-        {
-            if (patron.Name.Contains(searchInput))
-            {
-                searchResults.Add(patron);
-            }
-        }
-        searchResults.Sort((p1, p2) => String.Compare(p1.Name, p2.Name));
+        var searchResults = _jsonData.Patrons!
+            .Where(patron => patron.Name.Contains(searchInput))
+            .OrderBy(patron => patron.Name)
+            .ToList();
 
         searchResults = _jsonData.GetPopulatedPatrons(searchResults);
 
@@ -50,22 +45,10 @@ public class JsonPatronRepository : IPatronRepository
     {
         await _jsonData.EnsureDataLoaded();
         var patrons = _jsonData.Patrons!;
-        Patron existingPatron = null;
-        foreach (var p in patrons)
+        var index = patrons.FindIndex(p => p.Id == patron.Id);
+        if (index != -1)
         {
-            if (p.Id == patron.Id)
-            {
-                existingPatron = p;
-                break;
-            }
-        }
-        if (existingPatron != null)
-        {
-            existingPatron.Name = patron.Name;
-            existingPatron.ImageName = patron.ImageName;
-            existingPatron.MembershipStart = patron.MembershipStart;
-            existingPatron.MembershipEnd = patron.MembershipEnd;
-            existingPatron.Loans = patron.Loans;
+            patrons[index] = patron;
             await _jsonData.SavePatrons(patrons);
             await _jsonData.LoadData();
         }

@@ -4,6 +4,7 @@ using Library.Infrastructure.Data;
 using Library.ApplicationCore;
 using Library.ApplicationCore.Entities;
 using Xunit;
+namespace Library.UnitTests.ApplicationCore.LoanServiceTests;
 
 public class GetLoanTest
 {
